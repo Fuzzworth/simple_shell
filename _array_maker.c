@@ -6,16 +6,16 @@
  * Description: long description
  *
  * @input: argument_1 description
+ * @delimiter: argument_2 description
  *
  * Return: return description
  */
-char **array_maker(char *input)
+char **array_maker(char *input, char *delimiter)
 {
-	char *delimiter, *input_cpy, *token;
+	char *input_cpy, *token;
 	char **array_of_tokens;
 	int token_count, token_index, token_free_index;
 
-	delimiter = " \n";
 	token_count = 0;
 	input_cpy = (char *) malloc(sizeof(char) * strlen(input));
 	if (input_cpy == NULL)
