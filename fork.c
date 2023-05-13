@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * fork - short description
+ * _fork - short description
  *
  * Description: long description
  *
