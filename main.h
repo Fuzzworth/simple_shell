@@ -12,5 +12,5 @@ ssize_t _getline(char **input,
 char **array_maker(char *input, char *delimiter);
 int _fork(char **array_of_tokens);
 char *_which(char *filename);
-
+int _print_env(void);
 #endif
