@@ -20,6 +20,7 @@ int main(__attribute((unused)) int ac,
 	char **array_of_tokens;
 
 	_print_env();
+	printf("\nENV: %s\n\t%s\n", "LS_COLORS",_getenv("LS_COLORS"));
 	delimiter = " \n";
 	while (1)
 	{
