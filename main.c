@@ -19,6 +19,7 @@ int main(__attribute((unused)) int ac,
 	size_t number_of_malloc_bytes_allocated;
 	char **array_of_tokens;
 
+	_print_env();
 	delimiter = " \n";
 	while (1)
 	{

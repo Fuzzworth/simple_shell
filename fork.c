@@ -22,7 +22,7 @@ int _fork(char **array_of_tokens)
 	}
 	if (pid == 0)
 	{
-		is_execve_error = execve(array_of_tokens[0], array_of_tokens, NULL);
+		is_execve_error = execve(array_of_tokens[0], array_of_tokens, __environ);
 		if (is_execve_error == -1)
 		{
 			perror("_fork() Error: exece failed to run");
