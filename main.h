@@ -14,4 +14,7 @@ int _fork(char **array_of_tokens);
 char *_which(char *filename);
 int _print_env(void);
 char *_getenv(const char *name);
+int _setenv(const char *name, const char *value, int overwrite);
+int _unsetenv(const char *name);
+
 #endif
