@@ -35,7 +35,7 @@ char *malloc_char(char **string, size_t size_of_malloc, char *error_message)
  */
 char **malloc_array(char **array, size_t size_of_malloc, char *error_message)
 {
-	array = (char **) malloc(sizeof(char) * size_of_malloc);
+	array = (char **) malloc(sizeof(char *) * size_of_malloc);
 	if (array == NULL)
 	{
 		perror(error_message);

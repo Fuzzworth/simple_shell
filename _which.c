@@ -46,7 +46,6 @@ char *_which(char *filename)
 	}
 	file_path_exist = stat(filename, &sb);
 	if (file_path_exist == 0)
-		return (file_path);
-
+		return (filename);
 	return (NULL);
 }
