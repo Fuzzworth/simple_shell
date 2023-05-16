@@ -1,28 +1,29 @@
 #include "main.h"
-#include <sys/stat.h>
 
+/**
+ * _which - short description
+ *
+ * Description: long description
+ *
+ * @filename: argument_1 description
+ *
+ * Return: return description
+ */
 char *_which(char *filename)
 {
 	struct stat sb;
-	char *path_var, *path_var_cpy,*delimiter, *file_path;
+	char *path_var, *delimiter, *file_path;
 	char **array_of_tokens;
 	int token_index, file_path_exist;
 
 	delimiter = ":";
-	path_var = getenv("PATH");
+	path_var = _getenv("PATH");
 	if (!path_var)
 	{
 		perror("_which Error: getenv returned NULL");
 		return (NULL);
 	}
-	path_var_cpy = (char *) malloc(sizeof(char) * strlen(path_var));
-	if (path_var_cpy == NULL)
-	{
-		perror("_which Error: malloc error path_var_cpy is NULL");
-		return (NULL);
-	}
-	strcpy(path_var_cpy, path_var);
-	array_of_tokens = array_maker(path_var_cpy, delimiter);
+	array_of_tokens = array_maker(path_var, delimiter);
 	if (!array_of_tokens)
 	{
 		perror("_which Error: array_of_tokens is NULL");
@@ -30,12 +31,9 @@ char *_which(char *filename)
 	}
 	for (token_index = 0; array_of_tokens[token_index]; token_index++)
 	{
-		file_path = malloc(sizeof(char) * (strlen(array_of_tokens[token_index]) + strlen(filename) + 2));
-		if (!file_path)
-		{
-			perror("_which Error: malloc failed for file_path");
-			return (NULL);
-		}
+		malloc_char(&file_path,
+				(strlen(array_of_tokens[token_index]) + strlen(filename) + 2),
+				"_which Error: malloc failed for file_path");
 		strcpy(file_path, array_of_tokens[token_index]);
 		strcat(file_path, "/");
 		strcat(file_path, filename);

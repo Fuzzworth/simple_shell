@@ -3,37 +3,25 @@
 /**
  * _unsetenv - short description
  *
- * Description:
+ * Description: log description
  *
- * @argument_1: argument_1 description
+ * @name: argument_1 description
  *
  * Return: return description
  */
 int _unsetenv(const char *name)
 {
-	unsigned int env_index, new_env_index, free_new_env_index,
-		     is_found, found_index;
+	unsigned int env_index;
+	int new_env_index, free_new_env_index, found_index;
 	char **new_environ;
 
-	is_found = 0;
-
-	for (env_index = 0; __environ[env_index]; env_index++)
+	new_environ = NULL;
+	env_index = _env_length();
+	found_index = _env_name_exists(name);
+	if (found_index != -1)
 	{
-		if (strncmp(__environ[env_index], name, strlen(name)) == 0)
-		{
-			found_index = env_index;
-			is_found = 1;
-		}
-	}
-
-	if (is_found)
-	{
-		new_environ = (char **) malloc(sizeof(char *) * (env_index));
-		if (new_environ == NULL)
-		{
-			perror("_unsetenv() Error: new_environ malloc failed");
-			return (-1);
-		}
+		new_environ = malloc_array(new_environ, env_index,
+				"_unsetenv() Error: new_environ malloc failed");
 		for (new_env_index = 0; __environ[new_env_index]; new_env_index++)
 		{
 			if (new_env_index != found_index)
