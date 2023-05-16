@@ -1,38 +1,6 @@
 #include "main.h"
 
 /**
- * copy_array - short description
- *
- * Description: long description
- *
- * @destination: argument_1 description
- * @source: argument_2 description
- *
- * Return: return description
- */
-int copy_array(char **destination, char **source)
-{
-	size_t new_env_index, free_new_env_index;
-
-	for (new_env_index = 0; source[new_env_index]; new_env_index++)
-	{
-		destination[new_env_index] = malloc(sizeof(char) *
-				strlen(source[new_env_index]));
-		if (destination[new_env_index] == NULL)
-		{
-			perror("_setenv() Error: new_environ[new_env_index] malloc failed");
-			for (free_new_env_index = 0; free_new_env_index < new_env_index;
-					free_new_env_index++)
-				free(destination[new_env_index]);
-			free(destination);
-			return (-1);
-		}
-		strcpy(destination[new_env_index], source[new_env_index]);
-	}
-	return (0);
-}
-
-/**
  * create_envar - short description
  *
  * Description: long description
@@ -59,7 +27,7 @@ void create_envar(char **env_var, unsigned int envar_length, const char *name,
 }
 
 /**
- * env_exists - short description
+ * _env_set_exists - short description
  *
  * Description: long description
  *
@@ -73,13 +41,10 @@ void create_envar(char **env_var, unsigned int envar_length, const char *name,
 int _env_set_exists(char *env_var, unsigned int envar_length, const char *name,
 		int overwrite)
 {
-	unsigned int env_index, is_found;
+	unsigned int env_index;
 
-	is_found = 0;
 	for (env_index = 0; __environ[env_index]; env_index++)
 	{
-		if (strncmp(__environ[env_index], name, strlen(name)) == 0)
-			is_found = 1;
 		if (strncmp(__environ[env_index], name, strlen(name)) == 0 && overwrite != 0)
 		{
 			free(__environ[env_index]);
@@ -92,13 +57,10 @@ int _env_set_exists(char *env_var, unsigned int envar_length, const char *name,
 			}
 			strcpy(__environ[env_index], env_var);
 			free(env_var);
-			return (-1);
+			return (0);
 		}
 	}
-	if (is_found)
-		return (env_index);
-	else
-		return (0);
+	return (0);
 }
 
 /**
@@ -143,6 +105,7 @@ int env_does_not_exists(char *env_var, unsigned int envar_length,
 	__environ = new_environ;
 	return (0);
 }
+
 /**
  * _setenv - short description
  *
@@ -164,13 +127,15 @@ int env_does_not_exists(char *env_var, unsigned int envar_length,
  */
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	unsigned int env_legnth, envar_length;
+	unsigned int envar_length;
 	char *env_var;
 
 	envar_length = strlen(name) + strlen(value) + 2;
 	create_envar(&env_var, envar_length, name, value);
-	env_legnth = _env_set_exists(env_var, envar_length, name, overwrite);
-	if (env_legnth)
-		env_does_not_exists(env_var, envar_length, env_legnth);
+	_env_set_exists(env_var, envar_length, name, overwrite);
+	if (_env_name_exists(name) != -1)
+		_env_set_exists(env_var, envar_length, name, overwrite);
+	else
+		env_does_not_exists(env_var, envar_length, _env_length());
 	return (0);
 }
