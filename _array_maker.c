@@ -1,43 +1,54 @@
 #include "main.h"
 
 /**
- * array_maker - short description
+ * number_of_tokens - function that  returns the number of tokens in a string
  *
- * Description: long description
+ * Description: function that  returns the number of tokens in a string
  *
- * @input: argument_1 description
- * @delimiter: argument_2 description
+ * @input: input string
+ * @delimiter: delimiter string
  *
- * Return: return description
+ * Return: -1 if failure and a number if not
  */
-char **array_maker(char *input, char *delimiter)
+size_t number_of_tokens(char *input, char *delimiter)
 {
-	char *input_cpy, *token;
-	char **array_of_tokens;
-	int token_count, token_index, token_free_index;
+	char *token;
+	size_t token_count;
 
 	token_count = 0;
-	input_cpy = (char *) malloc(sizeof(char) * strlen(input));
-	if (input_cpy == NULL)
-	{
-		perror("array_maker() Error: input_cpy maoloc failure");
-		return (NULL);
-	}
-	strcpy(input_cpy, input);
-	token = strtok(input_cpy, delimiter);
+	token = strtok(input, delimiter);
 	while (token != NULL)
 	{
 		token_count++;
 		token = strtok(NULL, delimiter);
 	}
-	array_of_tokens = (char **) malloc(sizeof(char *) * (token_count + 1));
-	if (array_of_tokens == NULL)
-	{
+	return (token_count);
+}
+/**
+ * array_maker - function creates a NULL terminated array of a string delimited
+ *
+ * Description: function creates a NULL terminated array of a string delimited
+ *
+ * @input: input string
+ * @delimiter: delimiter string
+ *
+ * Return: returns NULL on failure and the array on success
+ */
+char **array_maker(char *input, char *delimiter)
+{
+	char *input_cpy, *token;
+	char **array_of_tokens;
+	size_t token_count, token_index, token_free_index;
 
-		perror("array_maker() Error: array_of_tokens** maoloc failure");
-		return (NULL);
-	}
-	token = strtok(input, delimiter);
+	array_of_tokens = NULL;
+	malloc_char(&input_cpy, strlen(input),
+			"array_maker() Error: input_cpy maoloc failure");
+	strcpy(input_cpy, input);
+	token_count = number_of_tokens(input_cpy, delimiter);
+	array_of_tokens = malloc_array(array_of_tokens, token_count + 1,
+			"array_maker() Error: array_of_tokens** maoloc failure");
+	strcpy(input_cpy, input);
+	token = strtok(input_cpy, delimiter);
 	for (token_index = 0; token_index < token_count; token_index++)
 	{
 		array_of_tokens[token_index] = (char *) malloc(sizeof(char) * strlen(token));
@@ -46,9 +57,8 @@ char **array_maker(char *input, char *delimiter)
 			for (token_free_index = 0;
 					token_free_index < token_index;
 					token_free_index++)
-			{
 				free(array_of_tokens[token_free_index]);
-			}
+			free(input_cpy);
 			free(array_of_tokens);
 			perror("array_maker() Error: array_of_tokens maoloc failure");
 			return (NULL);
@@ -57,6 +67,5 @@ char **array_maker(char *input, char *delimiter)
 		token = strtok(NULL, delimiter);
 	}
 	array_of_tokens[token_count] = NULL;
-
 	return (array_of_tokens);
 }

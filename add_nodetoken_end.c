@@ -1,7 +1,10 @@
 #include "lists.h"
 
 /**
- * add_nodeint_end - adds a new node at the end of a listtoken_t list
+ * add_nodetoken_end - adds a new node at the end of a listtoken_t list
+ *
+ * Description: function adds a new node to the end f the linked list
+ *
  * @head: points to a pointer that points to the first node
  * @token: the token to add
  *
