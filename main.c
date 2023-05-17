@@ -19,6 +19,8 @@ int main(__attribute((unused)) int ac,
 	size_t number_of_malloc_bytes_allocated;
 	char **array_of_tokens;
 
+	input = NULL;
+	number_of_malloc_bytes_allocated = 0;
 	delimiter = " \n";
 	while (1)
 	{

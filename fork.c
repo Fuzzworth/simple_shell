@@ -29,6 +29,13 @@ int _fork(char **array_of_tokens)
 			return (-1);
 		}
 	}
-	wait(&status);
+	else
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+		if (!isatty(STDIN_FILENO))
+			exit (status);
+	}
 	return (0);
 }
