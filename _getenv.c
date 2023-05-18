@@ -30,6 +30,7 @@ char *_getenv(const char *name)
 					"_getenv() malloc error");
 			strcpy(env_var_cpy, __environ[env_index]);
 			strncpy(env_var, env_var_cpy += (strlen(name) + 1), envar_length);
+			free(env_var_cpy -= (strlen(name) + 1));
 			return (env_var);
 		}
 	}

@@ -43,8 +43,7 @@ int main(__attribute((unused)) int ac,
 		which = _which(array_of_tokens[0]);
 		if (which !=  NULL)
 		{
-			array_of_tokens[0] = which;
-			_fork(array_of_tokens);
+			_fork(which, array_of_tokens);
 		}
 		free_main(array_of_tokens);
 	}
