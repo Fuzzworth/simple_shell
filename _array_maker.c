@@ -51,7 +51,8 @@ char **array_maker(char *input, char *delimiter)
 	token = strtok(input_cpy, delimiter);
 	for (token_index = 0; token_index < token_count; token_index++)
 	{
-		array_of_tokens[token_index] = (char *) malloc(sizeof(char) * strlen(token) + 1);
+		array_of_tokens[token_index] = (char *) malloc(sizeof(char) *
+				strlen(token) + 1);
 		if (array_of_tokens[token_index] == NULL)
 		{
 			for (token_free_index = 0;
