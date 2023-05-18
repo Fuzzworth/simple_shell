@@ -35,7 +35,7 @@ int _fork(char **array_of_tokens)
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		if (!isatty(STDIN_FILENO))
-			exit (status);
+			return (status);
 	}
 	return (0);
 }
