@@ -46,6 +46,8 @@ int main(__attribute((unused)) int ac,
 			_fork(which, array_of_tokens);
 		}
 		free_main(array_of_tokens);
+		free(input);
+		input = NULL;
 	}
 	return (0);
 }
