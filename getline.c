@@ -20,6 +20,9 @@ ssize_t _getline(char **input,
 	number_of_characters_read = getline(input,
 			number_of_malloc_bytes_allocated, stdin);
 	if (number_of_characters_read == -1)
+	{
+		free(*input);
 		exit(EXIT_FAILURE);
+	}
 	return (number_of_characters_read);
 }

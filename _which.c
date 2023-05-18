@@ -92,7 +92,7 @@ char *_which(char *filename)
 	if (file_path_exist == 0)
 	{
 		free_which(&path_var, array_of_tokens);
-		return (filename);
+		return (strdup(filename));
 	}
 	free_which(&path_var, array_of_tokens);
 	return (NULL);

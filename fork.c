@@ -33,6 +33,7 @@ int _fork(char *command, char **array_of_tokens)
 	else
 	{
 		wait(&status);
+		free(command);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		if (!isatty(STDIN_FILENO))
