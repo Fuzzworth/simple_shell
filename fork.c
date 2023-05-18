@@ -6,10 +6,11 @@
  * Description: long description
  *
  * @array_of_tokens: argument_1 description
+ * @command: string command
  *
  * Return: return description
  */
-int _fork(char **array_of_tokens)
+int _fork(char *command, char **array_of_tokens)
 {
 	pid_t pid;
 	int status, is_execve_error;
@@ -22,7 +23,7 @@ int _fork(char **array_of_tokens)
 	}
 	if (pid == 0)
 	{
-		is_execve_error = execve(array_of_tokens[0], array_of_tokens, __environ);
+		is_execve_error = execve(command, array_of_tokens, __environ);
 		if (is_execve_error == -1)
 		{
 			perror("_fork() Error: exece failed to run");

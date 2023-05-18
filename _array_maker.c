@@ -67,6 +67,7 @@ char **array_maker(char *input, char *delimiter)
 		strcpy(array_of_tokens[token_index], token);
 		token = strtok(NULL, delimiter);
 	}
+	free(input_cpy);
 	array_of_tokens[token_count] = NULL;
 	return (array_of_tokens);
 }
