@@ -14,6 +14,7 @@ void free_main(char **array_of_tokens)
 		free(array_of_tokens[index]);
 	free(array_of_tokens);
 }
+
 /**
  * main - short description
  *
@@ -33,6 +34,7 @@ int main(__attribute((unused)) int ac,
 	size_t number_of_malloc_bytes_allocated;
 	char **array_of_tokens;
 
+	signal(SIGINT, sigint_handler);
 	input = NULL;
 	number_of_malloc_bytes_allocated = 0;
 	delimiter = " \n";
