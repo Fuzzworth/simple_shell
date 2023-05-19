@@ -15,13 +15,13 @@ ssize_t _getline(char **input,
 {
 	ssize_t number_of_characters_read;
 
-	if (isatty(STDIN_FILENO))
-		printf("$ ");
+	prompt();
 	number_of_characters_read = getline(input,
 			number_of_malloc_bytes_allocated, stdin);
 	if (number_of_characters_read == -1)
 	{
 		free(*input);
+		write(STDOUT_FILENO, "\n", strlen("\n"));
 		exit(EXIT_FAILURE);
 	}
 	return (number_of_characters_read);

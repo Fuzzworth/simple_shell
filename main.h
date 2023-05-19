@@ -4,10 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+void prompt(void);
+void sigint_handler(int signal);
 ssize_t _getline(char **input,
 		size_t *number_of_malloc_bytes_allocated);
 char **array_maker(char *input, char *delimiter);
