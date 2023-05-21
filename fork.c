@@ -26,7 +26,7 @@ int _fork(char *command, char **array_of_tokens)
 		is_execve_error = execve(command, array_of_tokens, __environ);
 		if (is_execve_error == -1)
 		{
-			perror("_fork() Error: exece failed to run");
+			perror("execve: ");
 			return (-1);
 		}
 	}

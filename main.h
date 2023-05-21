@@ -12,7 +12,7 @@
 void prompt(void);
 void sigint_handler(int signal);
 ssize_t _getline(char **input,
-		size_t *number_of_malloc_bytes_allocated);
+		size_t *number_of_malloc_bytes_allocated, int status);
 char **array_maker(char *input, char *delimiter);
 int _fork(char *command, char **array_of_tokens);
 char *_which(char *filename);
@@ -25,4 +25,11 @@ char **malloc_array(char **array, size_t size_of_malloc, char *error_message);
 int copy_array(char **destination, char **source);
 int _env_name_exists(const char *name);
 int _env_length(void);
+void free_which(char **path_var, char **array_of_tokens);
+void free_main(char **array_of_tokens);
+void rev_string(char *s);
+char *_itoa(size_t command_num);
+int digit_counter(size_t command_num);
+void error_not_found(char **arvs, char **array_of_tokens, size_t command_num);
+
 #endif
