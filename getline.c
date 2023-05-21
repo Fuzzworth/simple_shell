@@ -7,11 +7,12 @@
  *
  * @input: description
  * @number_of_malloc_bytes_allocated: description
+ * @status: the exit status
  *
  * Return: -1 on failure greater than 0 on success
  */
 ssize_t _getline(char **input,
-		size_t *number_of_malloc_bytes_allocated)
+		size_t *number_of_malloc_bytes_allocated, int status)
 {
 	ssize_t number_of_characters_read;
 
@@ -21,8 +22,9 @@ ssize_t _getline(char **input,
 	if (number_of_characters_read == -1)
 	{
 		free(*input);
-		write(STDOUT_FILENO, "\n", strlen("\n"));
-		exit(EXIT_FAILURE);
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "\n", strlen("\n"));
+		exit(status);
 	}
 	return (number_of_characters_read);
 }

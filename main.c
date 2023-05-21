@@ -1,21 +1,6 @@
 #include "main.h"
 
 /**
- * free_main - free array of tokens in the main function
- * @array_of_tokens: tokenized string
- *
- * Return: void
- */
-void free_main(char **array_of_tokens)
-{
-	int index;
-
-	for (index = 0; array_of_tokens[index]; index++)
-		free(array_of_tokens[index]);
-	free(array_of_tokens);
-}
-
-/**
  * main - short description
  *
  * Description: long description
@@ -30,22 +15,35 @@ int main(__attribute((unused)) int ac,
 		__attribute((unused)) char **arvs,
 		__attribute((unused)) char **envp)
 {
+	int status;
 	char *input, *delimiter, *which;
-	size_t number_of_malloc_bytes_allocated;
+	size_t number_of_malloc_bytes_allocated, command_num;
 	char **array_of_tokens;
 
 	signal(SIGINT, sigint_handler);
 	input = NULL;
-	number_of_malloc_bytes_allocated = 0;
+	number_of_malloc_bytes_allocated = command_num = 0;
 	delimiter = " \n";
 	while (1)
 	{
-		_getline(&input, &number_of_malloc_bytes_allocated);
+		command_num++;
+		_getline(&input, &number_of_malloc_bytes_allocated, status);
 		array_of_tokens = array_maker(input, delimiter);
+		if (!(*array_of_tokens))
+		{
+			free_main(array_of_tokens);
+			status = 0;
+			continue;
+		}
 		which = _which(array_of_tokens[0]);
 		if (which !=  NULL)
 		{
-			_fork(which, array_of_tokens);
+			status = _fork(which, array_of_tokens);
+		}
+		else
+		{
+			error_not_found(arvs, array_of_tokens, command_num);
+			status = 127;
 		}
 		free_main(array_of_tokens);
 		free(input);
