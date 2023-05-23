@@ -1,5 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
+#define EXIT_CODE 1080
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,6 +9,20 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+
+/**
+ * struct builtin_command - Short description
+ * @name: First member
+ * @function: Second member
+ *
+ * Description: Longer description
+ */
+struct builtin_command
+{
+	char *name;
+	int (*function)(char **array_of_tokens);
+};
+
 
 void prompt(void);
 void sigint_handler(int signal);
@@ -26,10 +41,13 @@ int copy_array(char **destination, char **source);
 int _env_name_exists(const char *name);
 int _env_length(void);
 void free_which(char **path_var, char **array_of_tokens);
-void free_main(char **array_of_tokens);
+void free_main(char **array_of_tokens, char *input);
 void rev_string(char *s);
 char *_itoa(size_t command_num);
 int digit_counter(size_t command_num);
-void error_not_found(char **arvs, char **array_of_tokens, size_t command_num);
-
+int error_not_found(char **arvs, char **array_of_tokens, size_t command_num);
+int is_builtin(char **array_of_tokens);
+int builin_handler(char **array_of_tokens);
+int _exit_builtin(char **array_of_tokens);
+int _env_builtin(char **array_of_tokens);
 #endif
