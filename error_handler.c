@@ -8,7 +8,7 @@
  *
  * Return: void
  */
-void error_not_found(char **arvs, char **array_of_tokens, size_t command_num)
+int error_not_found(char **arvs, char **array_of_tokens, size_t command_num)
 {
 	char *error_str;
 	char *command_num_str = _itoa(command_num);
@@ -28,4 +28,5 @@ void error_not_found(char **arvs, char **array_of_tokens, size_t command_num)
 	write(STDERR_FILENO, error_str, strlen(error_str));
 	free(error_str);
 	free(command_num_str);
+	return (127);
 }

@@ -3,16 +3,18 @@
 /**
  * free_main - free array of tokens in the main function
  * @array_of_tokens: tokenized string
+ * @input: string
  *
  * Return: void
  */
-void free_main(char **array_of_tokens)
+void free_main(char **array_of_tokens, char *input)
 {
 	int index;
 
 	for (index = 0; array_of_tokens[index]; index++)
 		free(array_of_tokens[index]);
 	free(array_of_tokens);
+	free(input);
 }
 
 /**
