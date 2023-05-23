@@ -42,27 +42,21 @@ char *_which(char *filename)
 
 	delimiter = ":";
 	path_var = _getenv("PATH");
-	if (!path_var)
+	if (path_var != NULL)
 	{
-		perror("_which Error: getenv returned NULL");
-		return (NULL);
-	}
-	array_of_tokens = array_maker(path_var, delimiter);
-	if (!array_of_tokens)
-	{
-		perror("_which Error: array_of_tokens is NULL");
-		return (NULL);
-	}
-	for (token_index = 0; array_of_tokens[token_index]; token_index++)
-	{
-		filepath_creator(&file_path, array_of_tokens, filename, token_index);
-		file_path_exist = stat(file_path, &sb);
-		if (file_path_exist == 0)
+		array_of_tokens = array_maker(path_var, delimiter);
+		for (token_index = 0; array_of_tokens[token_index]; token_index++)
 		{
-			free_which(&path_var, array_of_tokens);
-			return (file_path);
+			filepath_creator(&file_path, array_of_tokens, filename, token_index);
+			file_path_exist = stat(file_path, &sb);
+			if (file_path_exist == 0)
+			{
+				free_which(&path_var, array_of_tokens);
+				return (file_path);
+			}
+			free(file_path);
 		}
-		free(file_path);
+		free_which(&path_var, array_of_tokens);
 	}
 	file_path_exist = stat(filename, &sb);
 	if (file_path_exist == 0)
@@ -70,6 +64,5 @@ char *_which(char *filename)
 		free_which(&path_var, array_of_tokens);
 		return (strdup(filename));
 	}
-	free_which(&path_var, array_of_tokens);
 	return (NULL);
 }
