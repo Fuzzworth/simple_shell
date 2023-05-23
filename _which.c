@@ -45,24 +45,24 @@ char *_which(char *filename)
 	if (path_var != NULL)
 	{
 		array_of_tokens = array_maker(path_var, delimiter);
-		for (token_index = 0; array_of_tokens[token_index]; token_index++)
+		if (array_of_tokens != NULL)
 		{
-			filepath_creator(&file_path, array_of_tokens, filename, token_index);
-			file_path_exist = stat(file_path, &sb);
-			if (file_path_exist == 0)
+			for (token_index = 0; array_of_tokens[token_index]; token_index++)
 			{
-				free_which(&path_var, array_of_tokens);
-				return (file_path);
+				filepath_creator(&file_path, array_of_tokens, filename, token_index);
+				file_path_exist = stat(file_path, &sb);
+				if (file_path_exist == 0)
+				{
+					free_which(&path_var, array_of_tokens);
+					return (file_path);
+				}
+				free(file_path);
 			}
-			free(file_path);
+			free_which(&path_var, array_of_tokens);
 		}
-		free_which(&path_var, array_of_tokens);
 	}
 	file_path_exist = stat(filename, &sb);
 	if (file_path_exist == 0)
-	{
-		free_which(&path_var, array_of_tokens);
 		return (strdup(filename));
-	}
 	return (NULL);
 }
