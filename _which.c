@@ -64,7 +64,7 @@ char *_which(char *filename)
 			free(path_var);
 	}
 	file_path_exist = stat(filename, &sb);
-	if (file_path_exist == 0 && strchr(filename, '/'))
+	if (file_path_exist == 0)
 		return (strdup(filename));
 	return (NULL);
 }
