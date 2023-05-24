@@ -1,6 +1,31 @@
 #include "main.h"
 
 /**
+ * is_valid_path - short description
+ *
+ * Description: long description
+ *
+ * @filename: string
+ *
+ * Return: 1 is executable 0 is non executable
+ */
+int is_valid_path(char *filename)
+{
+	size_t length = strlen(filename);
+
+	if (length >= strlen("../"))
+		if (strncmp(filename, "../", strlen("../")) == 0)
+			return (1);
+	if (length >= strlen("./"))
+		if (strncmp(filename, "./", strlen("./")) == 0)
+			return (1);
+	if (length >= strlen("/"))
+		if (strncmp(filename, "/", strlen("/")) == 0)
+			return (1);
+	return (0);
+}
+
+/**
  * filepath_creator - short description
  *
  * Description: long description
@@ -64,7 +89,7 @@ char *_which(char *filename)
 			free(path_var);
 	}
 	file_path_exist = stat(filename, &sb);
-	if (file_path_exist == 0)
+	if (file_path_exist == 0 && is_valid_path(filename))
 		return (strdup(filename));
 	return (NULL);
 }
