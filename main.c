@@ -34,7 +34,13 @@ int main(__attribute((unused)) int ac,
 		else
 		{
 			if (is_builtin(array_of_tokens))
-				status = builin_handler(array_of_tokens);
+			{
+				if (builin_handler(array_of_tokens) == EXIT_CODE)
+				{
+					free_main(array_of_tokens, input);
+					exit(status);
+				}
+			}
 			else
 			{
 				which = _which(array_of_tokens[0]);
@@ -45,8 +51,6 @@ int main(__attribute((unused)) int ac,
 			}
 		}
 		free_main(array_of_tokens, input);
-		if (status == EXIT_CODE)
-			exit(0);
 		input = NULL;
 	}
 	return (0);
