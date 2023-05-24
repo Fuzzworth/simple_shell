@@ -41,7 +41,7 @@ char *_which(char *filename)
 	int token_index, file_path_exist;
 
 	delimiter = ":";
-	path_var = _getenv("PATH");
+	path_var = _getenv("PATH=");
 	if (path_var != NULL)
 	{
 		array_of_tokens = array_maker(path_var, delimiter);
@@ -60,9 +60,11 @@ char *_which(char *filename)
 			}
 			free_which(&path_var, array_of_tokens);
 		}
+		else
+			free(path_var);
 	}
 	file_path_exist = stat(filename, &sb);
-	if (file_path_exist == 0)
+	if (file_path_exist == 0 && strchr(filename, '/'))
 		return (strdup(filename));
 	return (NULL);
 }
