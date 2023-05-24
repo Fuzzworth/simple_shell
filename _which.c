@@ -60,6 +60,7 @@ char *_which(char *filename)
 			}
 			free_which(&path_var, array_of_tokens);
 		}
+		free(path_var);
 	}
 	file_path_exist = stat(filename, &sb);
 	if (file_path_exist == 0)
