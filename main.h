@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-
+#include <stdint.h>
 /**
  * struct builtin_command - Short description
  * @name: First member
